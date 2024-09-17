@@ -7,6 +7,8 @@
 <body>
 
 <form action="/process_login" method="POST">
+    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+
     <label for="username">Username:</label>
     <br>
     <input id="username" name="username" type="text">
