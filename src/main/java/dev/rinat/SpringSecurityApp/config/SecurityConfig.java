@@ -25,7 +25,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Cross Site Request Forgeries attack
+                .csrf(AbstractHttpConfigurer::disable) // Cross Site Request Forgeries attack check disabled
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/auth/login", "/error", "auth/register").permitAll()
                         .anyRequest().authenticated())
@@ -33,7 +33,10 @@ public class SecurityConfig {
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/process_login")
                         .defaultSuccessUrl("/hello", true)
-                        .failureUrl("/auth/login?error"));
+                        .failureUrl("/auth/login?error"))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/auth/login"));
         return http.build();
     }
 
